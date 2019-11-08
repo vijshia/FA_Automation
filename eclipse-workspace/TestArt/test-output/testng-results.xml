@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" ignored="0" total="1" passed="1">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Suite" duration-ms="36481" started-at="2019-11-07T19:13:14 IST" finished-at="2019-11-07T19:13:50 IST">
+    <groups>
+      <group name="regression">
+        <method signature="ChargeBatchTest.ChargeBatchCreation(java.lang.String, java.lang.String, java.lang.String)[pri:0, instance:com.FA.app.tests.test.ChargeBatchTest@6bea2f1, instance params:[[[Ljava.lang.String;@6e641688, [Ljava.lang.String;@4d0648d8]]]" name="ChargeBatchCreation" class="com.FA.app.tests.test.ChargeBatchTest"/>
+      </group> <!-- regression -->
+      <group name="buildverify">
+        <method signature="ChargeBatchTest.ChargeBatchCreation(java.lang.String, java.lang.String, java.lang.String)[pri:0, instance:com.FA.app.tests.test.ChargeBatchTest@6bea2f1, instance params:[[[Ljava.lang.String;@6e641688, [Ljava.lang.String;@4d0648d8]]]" name="ChargeBatchCreation" class="com.FA.app.tests.test.ChargeBatchTest"/>
+      </group> <!-- buildverify -->
+    </groups>
+    <test name="Test_BatchCreation" duration-ms="36481" started-at="2019-11-07T19:13:14 IST" finished-at="2019-11-07T19:13:50 IST">
+      <class name="com.FA.app.tests.test.ChargeBatchTest">
+        <test-method status="PASS" signature="getDriver(java.lang.String, java.lang.String)[pri:0, instance:com.FA.app.tests.test.ChargeBatchTest@6bea2f1]" name="getDriver" is-config="true" duration-ms="17428" started-at="2019-11-07T19:12:56 IST" finished-at="2019-11-07T19:13:14 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[ch]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[http://172.22.21.95:8180/FirstClaim]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getDriver -->
+        <test-method status="PASS" signature="ChargeBatchCreation(java.lang.String, java.lang.String, java.lang.String)[pri:0, instance:com.FA.app.tests.test.ChargeBatchTest@6bea2f1, instance params:[[[Ljava.lang.String;@6e641688, [Ljava.lang.String;@4d0648d8]]]" name="ChargeBatchCreation" duration-ms="36235" started-at="2019-11-07T19:13:14 IST" description="Batch Entry and Batch tobe Scanned" finished-at="2019-11-07T19:13:50 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[BERRY_A]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[Goblue@1817]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[http://172.22.21.95:8180/FirstClaim]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- ChargeBatchCreation -->
+        <test-method status="PASS" signature="closeWebdriver()[pri:0, instance:com.FA.app.tests.test.ChargeBatchTest@6bea2f1]" name="closeWebdriver" is-config="true" duration-ms="692" started-at="2019-11-07T19:13:50 IST" finished-at="2019-11-07T19:13:51 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- closeWebdriver -->
+      </class> <!-- com.FA.app.tests.test.ChargeBatchTest -->
+    </test> <!-- Test_BatchCreation -->
+  </suite> <!-- Suite -->
+</testng-results>
