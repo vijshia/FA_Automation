@@ -332,6 +332,15 @@ public class basePage {
 		}
 	}
 
+	public void waitforNumberOfElementsmorethanOne(By locator_1, By locator_2, long waitseconds) throws Exception {
+
+		try {
+			webdriverwait(waitseconds).until(ExpectedConditions.or(ExpectedConditions.numberOfElementsToBeMoreThan(locator_1, 1), ExpectedConditions.numberOfElementsToBeMoreThan(locator_2, 1)));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * Reuse method, it will wait till the element is visible in the frame in DOM
 	 * Author: AJP16088
@@ -405,7 +414,7 @@ public class basePage {
 	public void navigatetoChildWindow(String parentwindow) throws Exception {
 
 		try {
-			for (String window : driver.getWindowHandles()) {
+			for (String window : gettingSetofWindows()) {
 				if (!window.equals(parentwindow)) {
 					driver.switchTo().window(window);
 				}
