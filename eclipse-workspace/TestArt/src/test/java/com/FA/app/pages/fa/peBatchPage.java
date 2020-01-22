@@ -4,6 +4,7 @@
 package com.FA.app.pages.fa;
 
 import static com.FA.app.pages.fa.batchestobeScannedPage.btn_piBatches_search;
+
 import static com.FA.app.pages.fa.piBatchPage.elementtoInvisible;
 import static com.FA.app.pages.fa.piBatchPage.lnk_ResultData;
 import static com.FA.app.pages.fa.piBatchPage.lookup_ErrorCorrection_jobCode;
@@ -35,10 +36,10 @@ import static com.FA.app.tests.baseTest.hm_testdata;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import com.FA.app.pages.basePage;
 import com.FA.framework.Log;
-
 /**
  * @author ajp16088
  *
@@ -57,6 +58,10 @@ public class peBatchPage extends basePage {
 	private By btn_ProviderTime = By.name("addilprov");
 	private By txt_ProviderCode = By.name("provider");
 	private By lookup_ProviderCode = By.xpath("//*[@name='provider']/following-sibling::a");
+	private By tag_forProvidersearchlookup = By.xpath("//*[@id='fancy_content']");
+	private By txt_ProviderCode_inProvidersearchlookup = By.name("providerCode");
+	private By btn_Search_inProvidersearchlookup = By.name("Search");
+	private By value_ProviderCode_inProvidersearchlookup = By.xpath("//*[text()='"+hm_testdata.get("PE_ProviderCode")+"']/parent::*/descendant::a");
 	private By txt_StartDate = By.xpath("//*[@name='lsPrcStartDt']/parent::td/following-sibling::td/input");
 	private By txt_StartTime = By.name("lsPrcStartTime");
 	private By txt_EndTime = By.name("lsPrcStopTime");
@@ -64,6 +69,8 @@ public class peBatchPage extends basePage {
 //	private By txt_ImageInfo = By.xpath("//*[text()='Image Info']/following-sibling::td/input");
 	private By elementtoInvisibleinPE = By.id("fancy_content");
 	private By btn_Add = By.id("add");
+	private By numberofrecords = By.xpath("//*[text()='Signature Initial']/following-sibling::th/ancestor::div[@id='fixed_header']/child::div[@class='body']/table/*");
+	private By numberoferrors = By.xpath("//*[@name='AdditionalProvidersForm']/child::*[@class='successerror_style']/descendant::div");
 	private By tableValues = By.xpath("//*[text()='Signature Initial']/following-sibling::th/ancestor::div[@id='fixed_header']/child::div[@class='body']/table/*");
 	private By btn_ApplyandExit = By.id("saveAnsExitBtn");
 //	private By btn_Exit = By.id("exit");
@@ -83,6 +90,7 @@ public class peBatchPage extends basePage {
 	private By header_SummaryLedgerTable = By.xpath("//tr[@class='table_hdr']/parent::tbody/tr");
 	private By btn_nextEpisode = By.xpath("//*[@alt='next']");
 	private By btn_nextProcedure = By.xpath("//*[text()='(F8) Next >>']");
+	private By formtoreload = By.name("ProcEntryForm");
 //	private By pageNumber = By.name("selectEpisode");
 //	private By lnk_InvoiceNumber = By.name("resultsLink");
 	
@@ -111,7 +119,7 @@ public class peBatchPage extends basePage {
 			clickonButton(btn_ProviderTime);
 			WaitandSwitchtoFancyFrame();
 			enteringValues(txt_ProviderCode, hm_testdata.get("PE_ProviderCode"));
-			clickonButton(lookup_ProviderCode);
+			searchProviderCode();			
 			if(gettingWebElement(txt_StartDate).getAttribute("name").equalsIgnoreCase("lsPrcStartTime")) {
 				enteringProviderTimings();
 			}
@@ -120,8 +128,11 @@ public class peBatchPage extends basePage {
 			waitforInVisibilityofElementLocated(elementtoInvisibleinPE, 15);
 			waitforVisibilityofElementLocated(btn_Add, 15);
 			clickonButton(btn_Add);
-			waitforVisibilityofElementLocated(tableValues, 25);
-//			waitforVisibilityofALLElementsLocated(gettingWebElement(tableValues), 25);
+//			waitforVisibilityofElementLocated(tableValues, 25);
+//			waitforVisibilityofALLElementsLocated(gettingWebElement(tableValues), 25);			
+//		System.out.println("******"+gettingListofWebElements(tableValues).size());
+			waitforNumberOfElementsmorethanOne(numberoferrors, numberofrecords, 30);
+//		System.out.println("******"+gettingListofWebElements(tableValues).size());
 			if(gettingListofWebElements(tableValues).size() == 1) {
 				enteringValues(txt_ProviderCode, hm_testdata.get("PE_ProviderCode"));
 				clickonButton(lookup_ProviderCode);
@@ -173,6 +184,8 @@ public class peBatchPage extends basePage {
 			 * waitforAttributeToBeinElementLocated(pageNumber, 20, "value",
 			 * String.valueOf(i+2)); waitforNumberOfWindowstobePresent(2, 25); } */
 			codingbatchespage.ClickonNextProcedureorEpisode(i, btn_nextProcedure, btn_nextEpisode);
+			WaitTillthePageLoads();
+			waitforAttributeToBeinElementLocated(formtoreload, 30, "action", "http://172.22.21.95:8180/FirstClaim/action/procedureEntryAddNew");
 		}
 		NavigatetoPEandClickonReleaseBatch();
 		if (!gettingWebElement(msg_confirmation).getText().contains("released successfully")) {
@@ -217,7 +230,7 @@ public class peBatchPage extends basePage {
 				clickonButton(lnk_Ledger);				
 				closingDocumentWindowandnavigatingtoLedgerWindow(parentWindow);		
 				waitforVisibilityofElementLocated(header_SummaryLedger, 25);					
-				if (gettingListofWebElements(header_SummaryLedgerTable).size() > checking()) { //gettingListofWebElements(header_SummaryLedgerTable).size() > 1
+				if (gettingListofWebElements(header_SummaryLedgerTable).size() > 1) { //gettingListofWebElements(header_SummaryLedgerTable).size() > 1
 					invoice = getInvoiceNumberfromSummaryLedgerWindow();
 					codingbatchespage.isDocumentWindowDisplaying(parentWindow);				
 				} else {
@@ -294,6 +307,7 @@ public class peBatchPage extends basePage {
 		waitforElementtobeClickable(btn_save, 25);
 		javascript_click(btn_save);
 		closeCurrentBrowser();
+		navigatetoParentWindow(parentwindow);
 		SwitchingtoDefaultandtoHomeFrame();
 	}
 
@@ -446,9 +460,75 @@ public class peBatchPage extends basePage {
 		return EpisodeIDs;
 	}
 	
-	private int checking() throws Exception {
-		System.out.println("checking size= "+gettingListofWebElements(header_SummaryLedgerTable).size());
-		return 2;		
+	private void searchProviderCode() throws Exception {
+		
+		clickonButton(lookup_ProviderCode);		
+		if(isProviderSearchLookupPresent()) {
+			WaitandSwitchtoFancyFrame();
+			waitforVisibilityofElementLocated(txt_ProviderCode_inProvidersearchlookup, 25);
+			enteringValues(txt_ProviderCode_inProvidersearchlookup, hm_testdata.get("PE_ProviderCode")); 
+			clickonButton(btn_Search_inProvidersearchlookup);
+			waitforElementtobeClickable(value_ProviderCode_inProvidersearchlookup, 25);
+			clickonButton(value_ProviderCode_inProvidersearchlookup);
+			SwitchingtoDefaultandtoHomeFrame();
+			WaitandSwitchtoFancyFrame();
+		}
+		waitforVisibilityofElementLocated(txt_StartTime, 50);
 	}
 	
+	private Boolean isProviderSearchLookupPresent() throws Exception {
+
+		Boolean lookuppresent = false;
+//		By tag_forProvidersearchlookup = By.xpath("//*[@id='fancy_content']"); //*[@id='fancy_outer']/descendant::*
+//		By providersearchlookup_Child = By.tagName("iframe");
+		webdriverwait(50).until(ExpectedConditions.visibilityOfElementLocated(tag_forProvidersearchlookup));
+		for(WebElement webelement:gettingListofWebElements(tag_forProvidersearchlookup)) {
+			for(WebElement element:webelement.findElements(By.xpath("./*"))) {
+				if(isIFrameVisible(element) && isIFrameTagVisible(element)) {				
+					lookuppresent = true;
+					break;
+				}
+			}
+		}
+//	System.out.println("----lookuppresent="+lookuppresent);
+		return lookuppresent;
+	}
+	
+	private Boolean isIFrameTagVisible(WebElement element) throws Exception {
+		Boolean isiframe = true;
+		try {
+			webdriverwait(50).until(ExpectedConditions.visibilityOf(element));
+			element.getTagName().contains("iframe");
+		} catch (Exception e) {
+			isiframe = false;
+		}
+//	System.out.println("----isiframe="+isiframe);
+		return isiframe;
+	}
+	
+	private Boolean isIFrameVisible(WebElement element) throws Exception {
+		Boolean isiframe = false;
+		try {
+			webdriverwait(50).until(ExpectedConditions.visibilityOf(element));
+			webdriverwait(50).until(ExpectedConditions.invisibilityOf(element));
+		} catch (Exception e) {
+			isiframe = true;
+		}
+//	System.out.println("----isiframe="+isiframe);
+		return isiframe;
+	}
+	
+	/*
+	 * private void checking1() throws Exception {
+	 * 
+	 * By numberofrecords = By.
+	 * xpath("//*[text()='Signature Initial']/following-sibling::th/ancestor::div[@id='fixed_header']/child::div[@class='body']/table/*"
+	 * ); By numberoferrors = By.xpath(
+	 * "//*[@name='AdditionalProvidersForm']/child::*[@class='successerror_style']/descendant::div"
+	 * ); System.out.println("-----"); System.out.println("--**-");
+	 * webdriverwait(25).until(ExpectedConditions.or(ExpectedConditions.
+	 * numberOfElementsToBeMoreThan(numberofrecords, 1),
+	 * ExpectedConditions.numberOfElementsToBeMoreThan(numberoferrors, 1)));
+	 * System.out.println("-----"); System.out.println("--**-"); }
+	 */	 
 }
