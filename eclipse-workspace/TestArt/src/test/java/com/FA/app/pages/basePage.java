@@ -340,6 +340,24 @@ public class basePage {
 			e.printStackTrace();
 		}
 	}
+
+	public void waitforElementtobeRefreshed(By locator, long waitseconds) throws Exception {
+
+		try {
+			webdriverwait(waitseconds).until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOfElementLocated(locator)));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void waitforStalenessOfElement(By locator, long waitseconds) throws Exception {
+
+		try {
+			webdriverwait(waitseconds).until(ExpectedConditions.stalenessOf(gettingWebElement(locator)));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	/**
 	 * Reuse method, it will wait till the element is visible in the frame in DOM
