@@ -41,10 +41,12 @@ public class WebContext {
 			driver = new InternetExplorerDriver();
 			Log.info(" InternetExplorer Browser Launched ");
 		} else if (browsertolaunch.equalsIgnoreCase("ch")) {
-			System.setProperty("webdriver.chrome.driver", filepath + "\\Drivers\\chromedriver.exe");
-			ChromeOptions choptions = new ChromeOptions();
+			System.setProperty("webdriver.chrome.driver", filepath + "\\Drivers\\chromedriver.exe");			
+			ChromeOptions choptions = new ChromeOptions();			
 			choptions.setAcceptInsecureCerts(true);
-			driver = new ChromeDriver(choptions);
+			choptions.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, UnexpectedAlertBehaviour.DISMISS);
+//			choptions.setCapability(CapabilityType.UNHANDLED_PROMPT_BEHAVIOUR, "DISMISS");
+			driver = new ChromeDriver(choptions);			
 			Log.info(" Chrome Browser Launched ");
 		} else if (browsertolaunch.equalsIgnoreCase("ff")) {
 			System.setProperty("webdriver.gecko.driver", filepath + "\\Drivers\\geckodriver.exe");
