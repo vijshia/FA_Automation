@@ -1,0 +1,27 @@
+Maven Installation issues:
+https://stackoverflow.com/questions/5230702/how-to-install-testng-plug-in-for-eclipse
+
+https://github.com/nokia/RED/issues/207
+
+TestNG Parallel:
+https://github.com/cbeust/testng/issues/1636
+
+PostMan:
+https://reqres.in/api/users?page=2
+
+SimpliLearn: 00490172 
+vijay.sivasubramanian@miramedajuba.com / Vijay16088
+
+about:config url and then uncheck privacy.file_unique_origin
+
+mvn clean test
+mvn allure:report
+OPen in FF: C:\Users\ajp16088\eclipse-workspace\TestArt\target\site\allure-maven-plugin\index.html
+
+https://www.swtestacademy.com/extentreports-testng/
+
+=RIGHT(IF(ISNUMBER(SEARCH("#",A14)),A14,""),LEN(A14)-FIND("#",A14))
+
+//*[contains(text(),'RESSJ')]/ancestor::tr/descendant::a[contains(text(),'9')]
+ancestor - Selects all parent, grandparent of the current node
+descendant - Selects all children, grandchildren of the current node
